@@ -49,16 +49,18 @@
                                     Ke Dashboard &rarr;
                                 </a>
                             @else
-                                <a href="{{ route('login') }}"
+                                <a href="{{ route('siswa.login') }}"
                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-slate-700 bg-white/50 border border-white/70 rounded-2xl hover:bg-white/80 hover:-translate-y-0.5 transition duration-300 ease-out shadow-sm">
-                                    Masuk
+                                    Masuk sebagai Siswa
                                 </a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}"
-                                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-400 to-violet-400 rounded-2xl hover:from-indigo-500 hover:to-violet-500 hover:-translate-y-0.5 transition duration-300 ease-out shadow-md shadow-indigo-200/50">
-                                        Daftar
-                                    </a>
-                                @endif
+                                <a href="{{ route('guru.login') }}"
+                                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-slate-700 bg-white/50 border border-white/70 rounded-2xl hover:bg-white/80 hover:-translate-y-0.5 transition duration-300 ease-out shadow-sm">
+                                    Masuk sebagai Guru
+                                </a>
+                                <a href="{{ route('login') }}"
+                                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-400 to-violet-400 rounded-2xl hover:from-indigo-500 hover:to-violet-500 hover:-translate-y-0.5 transition duration-300 ease-out shadow-md shadow-indigo-200/50">
+                                    Daftar
+                                </a>
                             @endauth
                         </div>
 
@@ -97,16 +99,18 @@
                                 Ke Dashboard &rarr;
                             </a>
                         @else
-                            <a href="{{ route('login') }}"
+                            <a href="{{ route('siswa.login') }}"
                                class="w-full text-center py-2.5 px-4 rounded-2xl text-sm font-medium text-slate-700 bg-white/60 border border-white/70 shadow-sm">
-                                Masuk
+                                Masuk sebagai Siswa
                             </a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}"
-                                   class="w-full text-center py-2.5 px-4 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-indigo-400 to-violet-400 shadow-md shadow-indigo-200/50">
-                                    Daftar Akun Baru
-                                </a>
-                            @endif
+                            <a href="{{ route('guru.login') }}"
+                               class="w-full text-center py-2.5 px-4 rounded-2xl text-sm font-medium text-slate-700 bg-white/60 border border-white/70 shadow-sm">
+                                Masuk sebagai Guru
+                            </a>
+                            <a href="{{ route('login') }}"
+                               class="w-full text-center py-2.5 px-4 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-indigo-400 to-violet-400 shadow-md shadow-indigo-200/50">
+                                Daftar Akun Baru
+                            </a>
                         @endauth
                     </div>
                 </div>
@@ -141,12 +145,12 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                                     </a>
                                 @else
-                                    <a href="{{ route('register') }}"
+                                    <a href="{{ route('login') }}"
                                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-indigo-400 to-violet-400 border border-transparent rounded-2xl font-semibold text-white shadow-lg shadow-indigo-200/50 hover:from-indigo-500 hover:to-violet-500 hover:-translate-y-0.5 transition duration-300 ease-out">
                                         <span>Mulai Belajar</span>
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                                     </a>
-                                    <a href="{{ route('login') }}"
+                                    <a href="{{ route('guru.login') }}"
                                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/50 border border-white/70 rounded-2xl font-semibold text-slate-700 hover:bg-white/80 hover:-translate-y-0.5 backdrop-blur shadow-sm transition duration-300 ease-out">
                                         <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                                         <span>Masuk sebagai Guru</span>
@@ -396,7 +400,7 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                                     </a>
                                 @else
-                                    <a href="{{ route('register') }}"
+                                    <a href="{{ route('login') }}"
                                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-indigo-400 to-violet-400 rounded-2xl hover:from-indigo-500 hover:to-violet-500 hover:-translate-y-0.5 transition duration-300 shadow-lg shadow-indigo-200/50">
                                         <span>Daftar Sekarang Secara Gratis</span>
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>

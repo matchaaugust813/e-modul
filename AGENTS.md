@@ -72,6 +72,31 @@ Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
 - Tanpa library eksternal, font eksternal, atau gambar eksternal (full inline SVG + native Tailwind + Vite)
 - npm run build sukses (CSS 79.88 kB, JS 54.32 kB)
 
+## Sudah selesai (Tahap 5A)
+- Migration baru: tambah kolom `status` (string, default 'active'), `deleted_at` (soft deletes),
+  `kelas_id` (nullable), `nis` (nullable), `mata_pelajaran_diampu` (nullable), `nip` (nullable),
+  dan ubah kolom `role` dari enum ke string (agar bisa menampung 'superadmin')
+- Model User: tambah `SoftDeletes`, fillable baru, method `isSuperAdmin()`, `isActive()`,
+  `isPending()`, `isRejected()`
+- Model Modul: relasi `guru()` kini pakai `withTrashed()`
+- UserSeeder: diperbarui memakai `updateOrCreate`, tambah akun superadmin `admin@example.com`
+  dengan role 'superadmin' dan status 'active'; semua akun lama ditambahkan `status => 'active'`
+- Middleware `CheckStatus`: cek status akun setelah login; redirect logout + pesan sesuai
+  (pending/rejected/non-active)
+- `bootstrap/app.php`: daftarkan alias `status.active` → `CheckStatus`
+- Controller Auth baru: `SiswaLoginController`, `GuruLoginController` (cek role + status + rate limit),
+  `SiswaDaftarController`, `GuruDaftarController` (role otomatis, status pending, tidak auto-login,
+  rate limit 5/jam per IP)
+- `routes/auth.php`: route `login` & `register` → view `auth.login-pilih`; tambah route siswa/login,
+  guru/login, siswa/daftar, guru/daftar, GET /pending
+- `routes/web.php`: middleware `status.active` ditambahkan ke grup guru & siswa
+- Views baru: `auth/login-pilih`, `auth/siswa-login`, `auth/guru-login`, `auth/siswa-daftar`,
+  `auth/guru-daftar`, `auth/pending` — semua gaya glassmorphism sesuai tema
+- `welcome.blade.php`: navbar & hero diperbarui: tombol "Masuk sebagai Siswa" → /siswa/login,
+  "Masuk sebagai Guru" → /guru/login, tombol Daftar → route('login') (pemilih peran)
+- `php artisan migrate` ✓ — `php artisan db:seed --class=UserSeeder` ✓ — `npm run build` ✓
+  (CSS 56.82 kB, JS 54.32 kB)
+
 ## Lingkungan
 - Windows + Laragon. PHP: C:\laragon\bin\php\php-8.3.33-Win32-vs16-x64\php.exe
 - Jangan memasang Laravel Boost. Jangan mengerjakan ulang tahap yang sudah selesai.
@@ -81,3 +106,4 @@ Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
 - Gunakan satu layout Blade bersama dan komponen Blade yang dipakai ulang.
 - File modul disimpan di disk private, bukan public.
 - Kerjakan hanya tahap yang diminta di prompt.
+- selalu catat dan update kerjaan kesini ketika sudah selesai

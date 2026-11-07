@@ -9,24 +9,42 @@ use Illuminate\Support\Facades\Hash;
 class UserSeeder extends Seeder
 {
     /**
-     * Buat 1 akun guru dan 1 akun siswa untuk testing.
+     * Buat akun-akun dasar: superadmin, guru, dan siswa.
+     * Menggunakan updateOrCreate agar aman dijalankan berulang kali.
      */
     public function run(): void
     {
+        // Akun Superadmin (Kepala Sekolah)
+        User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name'     => 'Admin Kepala',
+                'password' => Hash::make('password'),
+                'role'     => 'superadmin',
+                'status'   => 'active',
+            ]
+        );
+
         // Akun Guru
-        User::create([
-            'name'     => 'Budi Santoso',
-            'email'    => 'guru@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'guru',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'guru@example.com'],
+            [
+                'name'     => 'Budi Santoso',
+                'password' => Hash::make('password'),
+                'role'     => 'guru',
+                'status'   => 'active',
+            ]
+        );
 
         // Akun Siswa
-        User::create([
-            'name'     => 'Ani Rahayu',
-            'email'    => 'siswa@example.com',
-            'password' => Hash::make('password'),
-            'role'     => 'siswa',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'siswa@example.com'],
+            [
+                'name'     => 'Ani Rahayu',
+                'password' => Hash::make('password'),
+                'role'     => 'siswa',
+                'status'   => 'active',
+            ]
+        );
     }
 }

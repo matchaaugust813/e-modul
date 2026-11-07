@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Dashboard Guru
-Route::middleware(['auth', 'verified', 'role:guru'])
+Route::middleware(['auth', 'verified', 'status.active', 'role:guru'])
     ->prefix('guru')
     ->name('guru.')
     ->group(function () {
@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified', 'role:guru'])
     });
 
 // Dashboard Siswa
-Route::middleware(['auth', 'verified', 'role:siswa'])
+Route::middleware(['auth', 'verified', 'status.active', 'role:siswa'])
     ->prefix('siswa')
     ->name('siswa.')
     ->group(function () {

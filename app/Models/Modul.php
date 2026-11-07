@@ -30,9 +30,10 @@ class Modul extends Model
 
     /**
      * Modul dibuat oleh satu guru (user).
+     * Gunakan withTrashed() agar modul tetap menampilkan nama guru meski akunnya soft-deleted.
      */
     public function guru(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'guru_id');
+        return $this->belongsTo(User::class, 'guru_id')->withTrashed();
     }
 }
