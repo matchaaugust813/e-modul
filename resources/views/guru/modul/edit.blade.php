@@ -1,0 +1,26 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center gap-4">
+            <x-btn-secondary href="{{ route('guru.modul.index') }}">← Kembali</x-btn-secondary>
+            <h2 class="font-semibold text-xl text-slate-800 leading-tight">
+                Edit Modul
+            </h2>
+        </div>
+    </x-slot>
+
+    <div class="py-8">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <x-card title="Form Edit Modul">
+                <form method="POST" action="{{ route('guru.modul.update', $modul) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    @include('guru.modul._form')
+                    <div class="mt-6 flex gap-3">
+                        <x-btn-primary type="submit">Perbarui Modul</x-btn-primary>
+                        <x-btn-secondary href="{{ route('guru.modul.index') }}">Batal</x-btn-secondary>
+                    </div>
+                </form>
+            </x-card>
+        </div>
+    </div>
+</x-app-layout>
