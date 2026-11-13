@@ -15,13 +15,13 @@
 
     {{-- Pilih Kelas --}}
     <div>
-        <label class="block text-sm font-medium text-slate-600 mb-1.5">
-            Kelas <span class="text-rose-400">*</span>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">
+            Kelas <span class="text-rose-500">*</span>
         </label>
         <select
             x-model="kelasId"
             @change="updateMapel(); mapelId = ''"
-            class="w-full bg-white/50 border border-white/70 rounded-2xl shadow-sm text-sm text-slate-700 focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 backdrop-blur transition duration-300 ease-out"
+            class="w-full bg-white/80 border border-slate-200 rounded-2xl shadow-sm text-sm text-slate-700 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-300 ease-out"
         >
             <option value="">-- Pilih Kelas --</option>
             <template x-for="kelas in kelasList" :key="kelas.id">
@@ -32,13 +32,13 @@
 
     {{-- Pilih Mata Pelajaran --}}
     <div>
-        <label class="block text-sm font-medium text-slate-600 mb-1.5">
-            Mata Pelajaran <span class="text-rose-400">*</span>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">
+            Mata Pelajaran <span class="text-rose-500">*</span>
         </label>
         <select
             name="mata_pelajaran_id"
             x-model="mapelId"
-            class="w-full bg-white/50 border border-white/70 rounded-2xl shadow-sm text-sm text-slate-700 focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 backdrop-blur transition duration-300 ease-out"
+            class="w-full bg-white/80 border border-slate-200 rounded-2xl shadow-sm text-sm text-slate-700 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-300 ease-out"
             required
         >
             <option value="">-- Pilih Mata Pelajaran --</option>
@@ -91,9 +91,9 @@
         @enderror
 
         @if(isset($modul->id) && $modul->file_path)
-            <p class="mt-2 text-xs text-slate-400">
-                File saat ini: <span class="font-medium">{{ basename($modul->file_path) }}</span>
-                ({{ $modul->ukuran ? number_format($modul->ukuran / 1024, 1) . ' KB' : '-' }})
+            <p class="mt-2 text-xs text-slate-500">
+                File saat ini: <span class="font-medium text-slate-700">{{ basename($modul->file_path) }}</span>
+                ({{ format_ukuran($modul->ukuran) }})
             </p>
         @endif
     </div>

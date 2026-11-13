@@ -8,7 +8,7 @@
 
     <div class="mb-6">
         <div class="flex items-center gap-3 mb-1">
-            <span class="text-2xl">🎒</span>
+            <x-icon name="siswa" class="w-7 h-7 text-sky-600" />
             <h2 class="text-xl font-bold text-slate-800">Masuk sebagai Siswa</h2>
         </div>
         <p class="text-sm text-slate-500">Gunakan akun siswa Anda untuk masuk.</p>

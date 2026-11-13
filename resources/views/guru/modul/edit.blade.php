@@ -1,16 +1,20 @@
 <x-app-layout>
+    @section('title', 'Ubah Modul')
     <x-slot name="header">
         <div class="flex items-center gap-4">
-            <x-btn-secondary href="{{ route('guru.modul.index') }}">← Kembali</x-btn-secondary>
+            <x-btn-secondary href="{{ route('guru.modul.index') }}">
+                <x-icon name="panah-kiri" class="w-4 h-4 inline mr-1" />
+                Kembali
+            </x-btn-secondary>
             <h2 class="font-semibold text-xl text-slate-800 leading-tight">
-                Edit Modul
+                Ubah Modul
             </h2>
         </div>
     </x-slot>
 
     <div class="py-8">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <x-card title="Form Edit Modul">
+            <x-card title="Form Ubah Modul">
                 <form method="POST" action="{{ route('guru.modul.update', $modul) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')

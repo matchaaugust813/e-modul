@@ -1,7 +1,11 @@
 <x-app-layout>
+    @section('title', 'Tambah Modul Baru')
     <x-slot name="header">
         <div class="flex items-center gap-4">
-            <x-btn-secondary href="{{ route('guru.modul.index') }}">← Kembali</x-btn-secondary>
+            <x-btn-secondary href="{{ route('guru.modul.index') }}">
+                <x-icon name="panah-kiri" class="w-4 h-4 inline mr-1" />
+                Kembali
+            </x-btn-secondary>
             <h2 class="font-semibold text-xl text-slate-800 leading-tight">Tambah Modul Baru</h2>
         </div>
     </x-slot>

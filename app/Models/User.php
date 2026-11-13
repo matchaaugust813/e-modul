@@ -92,4 +92,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Modul::class, 'guru_id');
     }
+
+    /**
+     * Relasi: siswa memiliki kelas.
+     */
+    public function kelas(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Kelas::class, 'kelas_id');
+    }
+
+    /**
+     * Relasi: log audit yang dilakukan oleh user ini.
+     */
+    public function auditLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\AuditLog::class, 'user_id');
+    }
 }

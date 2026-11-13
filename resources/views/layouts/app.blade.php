@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'E-Modul') }}</title>
+        <title>@hasSection('title')@yield('title') | @elseif(isset($title)){{ $title }} | @endif{{ config('app.name', 'E-Modul') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,11 +19,11 @@
         {{-- Latar gradient pastel fixed --}}
         <div class="fixed inset-0 -z-10 bg-gradient-to-br from-violet-100 via-sky-50 to-emerald-50"></div>
 
-        {{-- Blob dekoratif bergerak pelan --}}
-        <div class="blob-1 fixed -z-10 -top-32 -left-32 w-[480px] h-[480px] bg-violet-200/40 rounded-full blur-3xl"></div>
-        <div class="blob-2 fixed -z-10 -bottom-32 -right-32 w-[480px] h-[480px] bg-sky-200/40 rounded-full blur-3xl"></div>
-        <div class="blob-3 fixed -z-10 top-1/2 left-1/2 w-80 h-80 bg-emerald-200/30 rounded-full blur-3xl"></div>
-        <div class="blob-4 fixed -z-10 top-1/4 right-1/4 w-64 h-64 bg-rose-100/30 rounded-full blur-3xl"></div>
+        {{-- Blob dekoratif statis di halaman dalam --}}
+        <div class="fixed -z-10 -top-32 -left-32 w-[480px] h-[480px] bg-violet-200/40 rounded-full blur-3xl"></div>
+        <div class="fixed -z-10 -bottom-32 -right-32 w-[480px] h-[480px] bg-sky-200/40 rounded-full blur-3xl"></div>
+        <div class="fixed -z-10 top-1/2 left-1/2 w-80 h-80 bg-emerald-200/30 rounded-full blur-3xl"></div>
+        <div class="fixed -z-10 top-1/4 right-1/4 w-64 h-64 bg-rose-100/30 rounded-full blur-3xl"></div>
 
         <div class="min-h-screen">
             @include('layouts.navigation')

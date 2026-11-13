@@ -13,18 +13,44 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-
                     @auth
-                        @if(auth()->user()->role === 'guru')
+                        @if(auth()->user()->isSuperAdmin())
+                            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                Dashboard
+                            </x-nav-link>
+                            @php
+                                $pendingCount = \App\Models\User::where('status', 'pending')->count();
+                            @endphp
+                            <x-nav-link :href="route('admin.persetujuan.index')" :active="request()->routeIs('admin.persetujuan.*')">
+                                <span>Persetujuan</span>
+                                @if($pendingCount > 0)
+                                    <span class="ml-1.5 px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                                        {{ $pendingCount }}
+                                    </span>
+                                @endif
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.pengguna.index')" :active="request()->routeIs('admin.pengguna.*')">
+                                Pengguna
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.modul.index')" :active="request()->routeIs('admin.modul.*')">
+                                Modul
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.log.index')" :active="request()->routeIs('admin.log.*')">
+                                Log Aktivitas
+                            </x-nav-link>
+                        @elseif(auth()->user()->role === 'guru')
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('guru.dashboard')">
+                                Dashboard
+                            </x-nav-link>
                             <x-nav-link :href="route('guru.modul.index')" :active="request()->routeIs('guru.modul.*')">
-                                {{ __('Modul') }}
+                                Modul
                             </x-nav-link>
                         @elseif(auth()->user()->role === 'siswa')
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('siswa.dashboard')">
+                                Dashboard
+                            </x-nav-link>
                             <x-nav-link :href="route('siswa.kelas.index')" :active="request()->routeIs('siswa.kelas.*') || request()->routeIs('siswa.mapel.*') || request()->routeIs('siswa.modul.*')">
-                                {{ __('Modul') }}
+                                Modul
                             </x-nav-link>
                         @endif
                     @endauth
@@ -45,7 +71,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            Profil
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -54,7 +80,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                Keluar
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -76,18 +102,36 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-white/40 bg-white/60 backdrop-blur-2xl">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-
             @auth
-                @if(auth()->user()->role === 'guru')
+                @if(auth()->user()->isSuperAdmin())
+                    <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        Dashboard
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.persetujuan.index')" :active="request()->routeIs('admin.persetujuan.*')">
+                        Persetujuan
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.pengguna.index')" :active="request()->routeIs('admin.pengguna.*')">
+                        Pengguna
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.modul.index')" :active="request()->routeIs('admin.modul.*')">
+                        Modul
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.log.index')" :active="request()->routeIs('admin.log.*')">
+                        Log Aktivitas
+                    </x-responsive-nav-link>
+                @elseif(auth()->user()->role === 'guru')
+                    <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('guru.dashboard')">
+                        Dashboard
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('guru.modul.index')" :active="request()->routeIs('guru.modul.*')">
-                        {{ __('Modul') }}
+                        Modul
                     </x-responsive-nav-link>
                 @elseif(auth()->user()->role === 'siswa')
+                    <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('siswa.dashboard')">
+                        Dashboard
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('siswa.kelas.index')" :active="request()->routeIs('siswa.kelas.*') || request()->routeIs('siswa.mapel.*') || request()->routeIs('siswa.modul.*')">
-                        {{ __('Modul') }}
+                        Modul
                     </x-responsive-nav-link>
                 @endif
             @endauth
@@ -102,7 +146,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    Profil
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -111,7 +155,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        Keluar
                     </x-responsive-nav-link>
                 </form>
             </div>

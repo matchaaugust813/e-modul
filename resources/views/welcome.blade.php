@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="id" class="scroll-smooth">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Portal modul pembelajaran digital untuk siswa dan guru kelas 1 SD sampai 12 SMA.">
 
-        <title>E-Modul</title>
+        <title>Beranda | E-Modul</title>
 
         <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -44,8 +45,8 @@
                         <!-- Tombol Autentikasi Desktop -->
                         <div class="hidden md:flex items-center gap-3">
                             @auth
-                                <a href="{{ auth()->user()->role === 'guru' ? route('guru.dashboard') : route('siswa.dashboard') }}"
-                                   class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-indigo-400 to-violet-400 rounded-2xl hover:from-indigo-500 hover:to-violet-500 hover:-translate-y-0.5 transition duration-300 ease-out shadow-md shadow-indigo-200/50">
+                                <a href="{{ auth()->user()->isSuperAdmin() ? route('admin.dashboard') : (auth()->user()->role === 'guru' ? route('guru.dashboard') : route('siswa.dashboard')) }}"
+                                   class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-violet-500 rounded-2xl hover:from-indigo-600 hover:to-violet-600 hover:-translate-y-0.5 transition duration-300 ease-out shadow-md shadow-indigo-200/50">
                                     Ke Dashboard &rarr;
                                 </a>
                             @else
@@ -94,8 +95,8 @@
                     
                     <div class="pt-3 border-t border-white/50 flex flex-col gap-2">
                         @auth
-                            <a href="{{ auth()->user()->role === 'guru' ? route('guru.dashboard') : route('siswa.dashboard') }}"
-                               class="w-full text-center py-2.5 px-4 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-indigo-400 to-violet-400 shadow-md shadow-indigo-200/50">
+                            <a href="{{ auth()->user()->isSuperAdmin() ? route('admin.dashboard') : (auth()->user()->role === 'guru' ? route('guru.dashboard') : route('siswa.dashboard')) }}"
+                               class="w-full text-center py-2.5 px-4 rounded-2xl text-sm font-medium text-white bg-gradient-to-r from-indigo-500 to-violet-500 shadow-md shadow-indigo-200/50">
                                 Ke Dashboard &rarr;
                             </a>
                         @else
@@ -168,7 +169,9 @@
                                 {{-- Kartu Belakang (Miring melayang) --}}
                                 <div class="float-reverse absolute -top-1 left-2 sm:-left-3 w-64 sm:w-72 p-5 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-lg shadow-indigo-200/20 -z-0">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-2xl bg-emerald-100/80 flex items-center justify-center text-lg">📗</div>
+                                        <div class="w-10 h-10 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                            <x-icon name="buku" class="w-5 h-5" />
+                                        </div>
                                         <div>
                                             <div class="h-3 w-28 bg-emerald-300/40 rounded-full"></div>
                                             <div class="h-2 w-16 bg-slate-300/50 rounded-full mt-2"></div>
@@ -181,11 +184,11 @@
                                 </div>
 
                                 {{-- Kartu Depan Utama (Glass Card Interaktif) --}}
-                                <div class="float-slow relative ml-auto w-72 sm:w-80 p-6 bg-white/60 backdrop-blur-2xl border border-white/80 rounded-3xl shadow-xl shadow-indigo-200/30 z-10">
+                                <div class="float-slow relative ml-auto w-72 sm:w-80 p-6 bg-white/80 border border-slate-200/80 rounded-3xl shadow-xl shadow-indigo-200/20 z-10">
                                     <div class="flex justify-between items-start">
                                         <div class="flex items-center gap-3">
-                                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center text-2xl shadow-inner">
-                                                📖
+                                            <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-inner">
+                                                <x-icon name="buku" class="w-6 h-6" />
                                             </div>
                                             <div>
                                                 <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-200/70 text-indigo-600">Kelas 10 SMA</span>
@@ -195,32 +198,34 @@
                                         <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200/60">PDF</span>
                                     </div>
 
-                                    <div class="mt-4 pt-4 border-t border-white/60 space-y-2">
+                                    <div class="mt-4 pt-4 border-t border-slate-100 space-y-2">
                                         <div class="flex justify-between text-xs text-slate-500">
                                             <span>Ukuran Berkas</span>
-                                            <span class="font-medium text-slate-700">3.8 MB</span>
+                                            <span class="font-medium text-slate-700">3,8 MB</span>
                                         </div>
                                         <div class="flex justify-between text-xs text-slate-500">
                                             <span>Materi Bab</span>
-                                            <span class="font-medium text-slate-700">Hukum Gerak & Energi</span>
+                                            <span class="font-medium text-slate-700">Hukum Gerak dan Energi</span>
                                         </div>
                                     </div>
 
                                     <div class="mt-5 flex gap-2">
-                                        <div class="flex-1 py-2 text-center text-xs font-semibold text-white bg-gradient-to-r from-indigo-400 to-violet-400 rounded-xl shadow-sm">
+                                        <div class="flex-1 py-2 text-center text-xs font-semibold text-white bg-gradient-to-r from-indigo-500 to-violet-500 rounded-xl shadow-sm">
                                             Baca Modul
                                         </div>
-                                        <div class="py-2 px-3 text-center text-xs font-medium text-slate-600 bg-white/70 border border-white/80 rounded-xl shadow-sm">
-                                            ⬇
+                                        <div class="py-2 px-3 flex items-center justify-center text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-xl shadow-sm">
+                                            <x-icon name="unduh" class="w-3.5 h-3.5 text-slate-600" />
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- Floating Badge Kecil --}}
-                                <div class="float-reverse absolute -bottom-4 left-6 sm:left-4 px-4 py-2.5 bg-white/70 backdrop-blur-2xl border border-white/80 rounded-2xl shadow-lg shadow-sky-200/30 flex items-center gap-2.5 z-20">
-                                    <div class="w-7 h-7 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 text-sm">✓</div>
+                                <div class="float-reverse absolute -bottom-4 left-6 sm:left-4 px-4 py-2.5 bg-white/80 border border-slate-200/80 rounded-2xl shadow-lg shadow-sky-200/20 flex items-center gap-2.5 z-20">
+                                    <div class="w-7 h-7 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
+                                        <x-icon name="centang" class="w-4 h-4" />
+                                    </div>
                                     <div>
-                                        <p class="text-xs font-bold text-slate-800">Privat & Aman</p>
+                                        <p class="text-xs font-bold text-slate-800">Privat dan Aman</p>
                                         <p class="text-[10px] text-slate-500">Akses resmi sekolah</p>
                                     </div>
                                 </div>
@@ -233,10 +238,12 @@
                 <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Stat 1: Kelas -->
-                        <div class="stagger-item p-6 sm:p-8 bg-gradient-to-br from-emerald-100/70 to-emerald-50/70 backdrop-blur-2xl border border-emerald-200/60 rounded-3xl shadow-lg shadow-emerald-200/30 transition duration-300 hover:-translate-y-1">
+                        <div class="stagger-item p-6 sm:p-8 bg-white/80 border border-emerald-100 rounded-3xl shadow-sm transition duration-300 hover:-translate-y-1">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-3xl">🏫</span>
-                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100/80 text-emerald-700 border border-emerald-200">SD • SMP • SMA</span>
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                                    <x-icon name="sekolah" class="w-6 h-6" />
+                                </div>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">SD &bull; SMP &bull; SMA</span>
                             </div>
                             <div class="text-3xl sm:text-4xl font-extrabold text-slate-800">{{ $jumlahKelas }}</div>
                             <p class="text-sm font-semibold text-emerald-700 mt-1">Tingkat Kelas Terdaftar</p>
@@ -244,10 +251,12 @@
                         </div>
 
                         <!-- Stat 2: Mata Pelajaran -->
-                        <div class="stagger-item p-6 sm:p-8 bg-gradient-to-br from-sky-100/70 to-sky-50/70 backdrop-blur-2xl border border-sky-200/60 rounded-3xl shadow-lg shadow-sky-200/30 transition duration-300 hover:-translate-y-1">
+                        <div class="stagger-item p-6 sm:p-8 bg-white/80 border border-sky-100 rounded-3xl shadow-sm transition duration-300 hover:-translate-y-1">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-3xl">📚</span>
-                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-sky-100/80 text-sky-700 border border-sky-200">Semua Jurusan</span>
+                                <div class="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-700">
+                                    <x-icon name="buku" class="w-6 h-6" />
+                                </div>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200">Semua Jurusan</span>
                             </div>
                             <div class="text-3xl sm:text-4xl font-extrabold text-slate-800">{{ $jumlahMapel }}</div>
                             <p class="text-sm font-semibold text-sky-700 mt-1">Mata Pelajaran Aktif</p>
@@ -255,14 +264,16 @@
                         </div>
 
                         <!-- Stat 3: Modul Tersedia -->
-                        <div class="stagger-item p-6 sm:p-8 bg-gradient-to-br from-violet-100/70 to-violet-50/70 backdrop-blur-2xl border border-violet-200/60 rounded-3xl shadow-lg shadow-violet-200/30 transition duration-300 hover:-translate-y-1">
+                        <div class="stagger-item p-6 sm:p-8 bg-white/80 border border-violet-100 rounded-3xl shadow-sm transition duration-300 hover:-translate-y-1">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-3xl">📄</span>
-                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-violet-100/80 text-violet-700 border border-violet-200">File PDF</span>
+                                <div class="w-12 h-12 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-700">
+                                    <x-icon name="dokumen" class="w-6 h-6" />
+                                </div>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">File PDF</span>
                             </div>
                             <div class="text-3xl sm:text-4xl font-extrabold text-slate-800">{{ $jumlahModul }}</div>
                             <p class="text-sm font-semibold text-violet-700 mt-1">Modul Digital Tersedia</p>
-                            <p class="text-xs text-slate-500 mt-1">Materi ajar berkualitas yang siap dipelajari dan diunduh.</p>
+                            <p class="text-xs text-slate-500 mt-1">Materi ajar yang siap dipelajari dan diunduh.</p>
                         </div>
                     </div>
                 </section>

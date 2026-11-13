@@ -20,14 +20,47 @@ Route::get('/', function () {
     ]);
 });
 
-// Route lama /dashboard dialihkan berdasarkan role setelah login
+// Route /dashboard dialihkan berdasarkan role setelah login
 Route::get('/dashboard', function () {
     $user = auth()->user();
+    if ($user && $user->isSuperAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
     if ($user && $user->role === 'guru') {
         return redirect()->route('guru.dashboard');
     }
     return redirect()->route('siswa.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Dashboard & Manajemen Superadmin (Kepala Sekolah)
+$adminPath = config('app.admin_path', 'admin');
+Route::middleware(['auth', 'verified', 'status.active', 'role:superadmin'])
+    ->prefix($adminPath)
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+        // Persetujuan Pendaftaran
+        Route::get('/persetujuan', [\App\Http\Controllers\Admin\UserController::class, 'persetujuan'])->name('persetujuan.index');
+        Route::post('/persetujuan/{user}/setujui', [\App\Http\Controllers\Admin\UserController::class, 'setujui'])->name('persetujuan.setujui');
+        Route::post('/persetujuan/{user}/tolak', [\App\Http\Controllers\Admin\UserController::class, 'tolak'])->name('persetujuan.tolak');
+
+        // Kelola Pengguna
+        Route::get('/pengguna', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('pengguna.index');
+        Route::post('/pengguna/{user}/setujui', [\App\Http\Controllers\Admin\UserController::class, 'setujui'])->name('pengguna.setujui');
+        Route::post('/pengguna/{user}/tolak', [\App\Http\Controllers\Admin\UserController::class, 'tolak'])->name('pengguna.tolak');
+        Route::delete('/pengguna/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('pengguna.destroy');
+        Route::post('/pengguna/{id}/pulihkan', [\App\Http\Controllers\Admin\UserController::class, 'pulihkan'])->name('pengguna.pulihkan');
+
+        // Kelola Modul
+        Route::get('/modul', [\App\Http\Controllers\Admin\ModulController::class, 'index'])->name('modul.index');
+        Route::get('/modul/{modul}/baca', [\App\Http\Controllers\Admin\ModulController::class, 'baca'])->name('modul.baca');
+        Route::get('/modul/{modul}/stream', [\App\Http\Controllers\Admin\ModulController::class, 'stream'])->name('modul.stream');
+        Route::delete('/modul/{modul}', [\App\Http\Controllers\Admin\ModulController::class, 'destroy'])->name('modul.destroy');
+
+        // Audit Log
+        Route::get('/log', [\App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('log.index');
+    });
 
 // Dashboard Guru
 Route::middleware(['auth', 'verified', 'status.active', 'role:guru'])

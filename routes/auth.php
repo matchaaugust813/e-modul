@@ -26,6 +26,12 @@ Route::middleware('guest')->group(function () {
         return view('auth.login-pilih');
     })->name('register');
 
+    // ── Login Superadmin (Terpisah & Tersembunyi) ───────────────────────────
+    $adminPath = config('app.admin_path', 'admin');
+    Route::get($adminPath . '/login', [\App\Http\Controllers\Admin\AdminLoginController::class, 'create'])
+        ->name('admin.login');
+    Route::post($adminPath . '/login', [\App\Http\Controllers\Admin\AdminLoginController::class, 'store']);
+
     // ── Login Siswa ──────────────────────────────────────────────────────────
     Route::get('siswa/login', [SiswaLoginController::class, 'create'])->name('siswa.login');
     Route::post('siswa/login', [SiswaLoginController::class, 'store']);

@@ -14,6 +14,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Akun demo hanya dibuat jika lingkungan lokal (APP_ENV=local)
+        if (! app()->environment('local')) {
+            return;
+        }
+
         // Akun Superadmin (Kepala Sekolah)
         User::updateOrCreate(
             ['email' => 'admin@example.com'],

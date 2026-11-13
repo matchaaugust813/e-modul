@@ -1,8 +1,12 @@
 <x-app-layout>
+    @section('title', 'Daftar Modul')
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-slate-800 leading-tight">Daftar Modul</h2>
-            <x-btn-primary :href="route('guru.modul.create')">+ Tambah Modul</x-btn-primary>
+            <x-btn-primary :href="route('guru.modul.create')">
+                <x-icon name="tambah" class="w-4 h-4 inline-block mr-1" />
+                Tambah Modul
+            </x-btn-primary>
         </div>
     </x-slot>
 
@@ -20,7 +24,8 @@
                     name="search"
                     value="{{ $search }}"
                     placeholder="Cari judul modul..."
-                    class="bg-white/50 border border-white/70 rounded-2xl shadow-sm text-sm flex-1 text-slate-700 placeholder-slate-400 focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 backdrop-blur transition duration-300 ease-out"
+                    aria-label="Cari judul modul"
+                    class="bg-white/80 border border-slate-200 rounded-2xl shadow-sm text-sm flex-1 text-slate-700 placeholder-slate-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-300 ease-out"
                 >
                 <x-btn-primary type="submit">Cari</x-btn-primary>
                 @if($search)
@@ -31,7 +36,7 @@
             <x-card :padding="false">
                 <x-table :headers="['Judul', 'Mata Pelajaran', 'Kelas', 'Ukuran', 'Aksi']">
                     @forelse($moduls as $modul)
-                        <tr class="hover:bg-white/40 transition duration-100">
+                        <tr class="hover:bg-slate-50/60 transition duration-100">
                             <td class="px-6 py-4 font-medium text-slate-800">
                                 {{ $modul->judul }}
                             </td>
@@ -42,12 +47,12 @@
                                 {{ $modul->mataPelajaran->kelas->label }}
                             </td>
                             <td class="px-6 py-4 text-slate-500 text-xs">
-                                {{ $modul->ukuran ? number_format($modul->ukuran / 1024, 1) . ' KB' : '-' }}
+                                {{ format_ukuran($modul->ukuran) }}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2">
                                     <x-btn-secondary href="{{ route('guru.modul.edit', $modul) }}">
-                                        Edit
+                                        Ubah
                                     </x-btn-secondary>
                                     <form method="POST" action="{{ route('guru.modul.destroy', $modul) }}"
                                           onsubmit="return confirm('Yakin ingin menghapus modul ini?')">
@@ -60,8 +65,8 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-10 text-center text-slate-400">
-                                Belum ada modul. <a href="{{ route('guru.modul.create') }}" class="text-indigo-600 hover:underline">Tambah sekarang</a>.
+                            <td colspan="5" class="px-6 py-10 text-center text-slate-500">
+                                Belum ada modul yang diunggah. <a href="{{ route('guru.modul.create') }}" class="text-indigo-600 font-medium hover:underline">Tambah modul baru</a>.
                             </td>
                         </tr>
                     @endforelse

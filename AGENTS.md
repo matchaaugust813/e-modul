@@ -1,7 +1,7 @@
 # e-modul
 
 Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
-> mata pelajaran > modul (file PDF). Dua peran: siswa dan guru.
+> mata pelajaran > modul (file PDF). Tiga peran: siswa, guru, superadmin.
 
 ## Sudah selesai (Tahap 1)
 - Breeze Blade; kolom `role` (siswa/guru) di tabel users; middleware alias `role`
@@ -58,7 +58,7 @@ Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
 - Animasi: page-enter (fade+slide-up 0.4s) di <main>, stagger-item di kartu list
 - Scroll halus (scroll-behavior: smooth), focus ring berwarna indigo lembut
 - Halaman siswa/kelas: variasi pastel per jenjang (SD=mint emerald, SMP=sky, SMA=lavender violet)
-  dengan emoji berbeda dan heading berwarna sesuai jenjang
+  dengan emoji berbeda (SUDAH TIDAK BERLAKU: emoji dilarang, diganti ikon di Tahap 4C) dan heading berwarna sesuai jenjang
 - Semua kartu hover: rounded-3xl, shadow hover naik (-translate-y-1.5), duration-300 ease-out
 - Dashboard siswa/guru: ikon dalam wadah bulat rounded-2xl pastel
 - npm run build sukses (74.25 kB CSS, 54.32 kB JS)
@@ -94,8 +94,65 @@ Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
   `auth/guru-daftar`, `auth/pending` — semua gaya glassmorphism sesuai tema
 - `welcome.blade.php`: navbar & hero diperbarui: tombol "Masuk sebagai Siswa" → /siswa/login,
   "Masuk sebagai Guru" → /guru/login, tombol Daftar → route('login') (pemilih peran)
-- `php artisan migrate` ✓ — `php artisan db:seed --class=UserSeeder` ✓ — `npm run build` ✓
+- `php artisan migrate` (berhasil) — `php artisan db:seed --class=UserSeeder` (berhasil) — `npm run build` (berhasil)
   (CSS 56.82 kB, JS 54.32 kB)
+
+## Sudah selesai (Tahap 4C)
+- Perintah permanen `php artisan ui:cek-emoji`: memindai teks di seluruh folder proyek untuk mendeteksi karakter emoji/simbol terlarang (exit code 1 jika ada temuan, 0 jika bersih).
+- Komponen baru `<x-icon>` (`resources/views/components/icon.blade.php`) dengan SVG inline seragam (viewBox 24, stroke 1.5, stroke currentColor, tanpa fill, `aria-hidden="true"`).
+- Pembersihan total emoji di seluruh view (auth, guru, siswa, welcome), digantikan dengan `<x-icon>` dan teks konkret berbahasa Indonesia.
+- Audit anti AI slop: hapus teks bergradien dan glow warna-warni; hilangkan kaca di atas kaca; form, tabel, dan area baca teks panjang menggunakan permukaan solid `bg-white/80` ke atas.
+- Latar dekoratif statis di seluruh halaman dalam (animasi blob hanya aktif di halaman `welcome`).
+- Halaman error kustom berbahasa Indonesia di `resources/views/errors/`: `403.blade.php`, `404.blade.php`, `419.blade.php` ("Sesi Anda berakhir. Muat ulang halaman lalu coba lagi"), `500.blade.php`.
+- Konfigurasi locale & timezone: `Asia/Jakarta`, locale `id`, faker `id_ID`, `<html lang="id">`, dan helper bersama `format_tanggal()` ("13 Nov 2026") serta `format_ukuran()` ("2,4 MB").
+- Judul tab terstandardisasi `"Judul Halaman | E-Modul"`.
+- `php artisan ui:cek-emoji` (bersih, 0 temuan) — `npm run build` (berhasil, CSS 74.39 kB, JS 54.32 kB).
+
+## Sudah selesai (Tahap 5B)
+- Perintah CLI `php artisan admin:buat` untuk membuat akun superadmin secara interaktif tanpa form web publik (kata sandi tersembunyi min 12 karakter + konfirmasi).
+- Login superadmin terisolasi & tersembunyi di `/{admin_path}/login` (default `/admin/login`, konfigurasi `app.admin_path` / `ADMIN_PATH`), rate limit 5x/jam per IP, pesan seragam "Email atau kata sandi salah.".
+- Dashboard superadmin (`/{admin_path}/dashboard`): metrik siswa/guru aktif, pending approval, total modul & ukuran berkas, modul per jenjang, serta daftar 5 pendaftar pending dengan tombol aksi langsung.
+- Persetujuan pendaftaran (`/{admin_path}/persetujuan`): filter peran (siswa/guru), aksi Setujui & Tolak akun pending.
+- Kelola pengguna (`/{admin_path}/pengguna`): pencarian nama/email, filter peran & status, soft delete, dan pemulihan (restore) akun (modul guru tetap tersimpan via withTrashed).
+- Kelola modul (`/{admin_path}/modul`): pencarian, filter kelas/mapel/guru, hapus modul beserta file fisik di disk private (ModulPolicy diperbarui).
+- Sistem audit log terpusat (`AuditLogService` & tabel `audit_logs`): mencatat login sukses/gagal, setujui, tolak, hapus/pulihkan akun, dan hapus modul; serta penampil log di `/{admin_path}/log`.
+- Navigasi khusus superadmin di `navigation.blade.php` (dengan badge hitungan pending).
+- `php artisan migrate` (berhasil) — `php artisan ui:cek-emoji` (bersih, 0 temuan) — `npm run build` (berhasil, CSS 73.39 kB, JS 54.32 kB).
+
+## Status dan urutan tahap berikutnya
+- Selesai: Tahap 1, 2, 3, 4A, 4A-2, Welcome, 5A, 4C, 5B.
+- Berikutnya: Tahap 4B (Pesan umpan balik, empty state, dan automated feature test).
+
+## Aturan tampilan (wajib, berlaku untuk semua tahap)
+- DILARANG memakai emoji di mana pun: view, komponen, pesan, seeder, config, README.
+  Termasuk simbol dekoratif seperti centang, silang, bintang, dan tanda peringatan
+  bergambar. Ikon hanya lewat komponen `<x-icon>` (SVG inline, satu gaya: stroke 1.5,
+  currentColor, `aria-hidden="true"`). Tombol yang hanya berisi ikon wajib punya
+  `aria-label`. Tanda baca tipografi biasa (– — ’ “ ” … • · × ← → ›) tetap boleh.
+- Sebelum menyatakan tahap selesai, jalankan `php artisan ui:cek-emoji` (dibuat di
+  Tahap 4C). Jika ada temuan, hapus dulu. Jangan menyatakan selesai sebelum bersih.
+- Hindari tampilan "AI slop":
+  - Gradient hanya untuk latar dan satu tombol utama per layar. Dilarang teks
+    bergradient, glow warna-warni, dan kaca di atas kaca.
+  - Efek kaca hanya untuk navbar dan panel pembungkus. Tabel, form, dan area baca
+    memakai permukaan lebih solid (bg-white/80 ke atas) agar terbaca.
+  - Satu warna aksen (indigo). Warna jenjang (SD mint, SMP sky, SMA lavender)
+    hanya sebagai penanda fungsi, bukan hiasan.
+  - Bentuk dan jarak konsisten: dua ukuran radius, satu level bayangan kartu dan
+    satu untuk hover, jarak kelipatan 4/8, skala huruf tetap.
+  - Animasi hanya fade/slide masuk dan hover naik 1-2px. Blob latar bergerak hanya
+    di welcome; halaman dalam statis.
+  - Halaman dalam rata kiri dengan hierarki jelas. Empty state berisi teks konkret
+    dan satu aksi, bukan ilustrasi besar.
+- Teks antarmuka berbahasa Indonesia sehari-hari yang konkret. Dilarang kata
+  hiperbola dan klise ("revolusioner", "tingkatkan potensi", "tanpa batas"), tanda
+  seru beruntun, serta data palsu (jumlah pengguna, testimoni, rating). Statistik
+  hanya dari database.
+- Aksesibilitas dasar: kontras teks minimal 4.5:1, focus ring terlihat, setiap input
+  punya label, status akun/modul berupa teks (bukan warna saja), target sentuh
+  minimal 40px, `<html lang="id">`.
+- Judul tab "Judul Halaman | E-Modul". Tanggal format Indonesia (13 Nov 2026), ukuran
+  file "2,4 MB", zona waktu Asia/Jakarta.
 
 ## Lingkungan
 - Windows + Laragon. PHP: C:\laragon\bin\php\php-8.3.33-Win32-vs16-x64\php.exe
@@ -107,3 +164,13 @@ Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
 - File modul disimpan di disk private, bukan public.
 - Kerjakan hanya tahap yang diminta di prompt.
 - selalu catat dan update kerjaan kesini ketika sudah selesai
+- Perintah rutin: `npm run build` (setiap view/CSS berubah), `php artisan test`,
+  `php artisan ui:cek-emoji`.
+- Semua aksi ubah data: POST/PUT/DELETE + `@csrf`, validasi input, otorisasi di
+  controller atau policy (bukan hanya menyembunyikan tombol).
+- Peran dan status pengguna hanya diubah lewat aksi superadmin; abaikan input `role`
+  dan `status` dari request mana pun.
+- Jangan pernah mengubah test agar lolos. Jika test gagal karena bug aplikasi,
+  laporkan nama test, penyebab, dan file terkait.
+- Akun demo (guru@example.com, siswa@example.com, admin@example.com) hanya untuk
+  APP_ENV=local dan harus dihapus sebelum dipakai pihak lain.

@@ -12,12 +12,12 @@ class ModulPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->role === 'guru';
+        return $user->role === 'guru' || $user->isSuperAdmin();
     }
 
     public function view(User $user, Modul $modul): bool
     {
-        return $user->role === 'guru';
+        return $user->role === 'guru' || $user->isSuperAdmin();
     }
 
     public function create(User $user): bool
@@ -27,11 +27,11 @@ class ModulPolicy
 
     public function update(User $user, Modul $modul): bool
     {
-        return $user->id === $modul->guru_id;
+        return $user->role === 'guru' && $user->id === $modul->guru_id;
     }
 
     public function delete(User $user, Modul $modul): bool
     {
-        return $user->id === $modul->guru_id;
+        return ($user->role === 'guru' && $user->id === $modul->guru_id) || $user->isSuperAdmin();
     }
 }

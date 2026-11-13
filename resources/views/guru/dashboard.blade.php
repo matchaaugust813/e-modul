@@ -1,4 +1,5 @@
 <x-app-layout>
+    @section('title', 'Dashboard Guru')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-slate-800 leading-tight">Dashboard Guru</h2>
     </x-slot>
@@ -8,10 +9,12 @@
 
             <x-card>
                 <div class="flex items-center gap-4">
-                    <div class="w-14 h-14 bg-indigo-100/70 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">🏫</div>
+                    <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 flex-shrink-0">
+                        <x-icon name="sekolah" class="w-7 h-7" />
+                    </div>
                     <div>
-                        <h3 class="text-lg font-semibold text-slate-800">Selamat datang, {{ $user->name }}!</h3>
-                        <p class="text-slate-500 mt-1">Anda login sebagai <span class="font-semibold text-indigo-600">Guru</span>.</p>
+                        <h3 class="text-lg font-semibold text-slate-800">Selamat datang, {{ $user->name }}</h3>
+                        <p class="text-slate-500 mt-1">Anda masuk sebagai <span class="font-semibold text-indigo-600">Guru</span>.</p>
                     </div>
                 </div>
             </x-card>
@@ -19,11 +22,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <x-card class="stagger-item">
                     <div class="flex items-center gap-4">
-                        <div class="flex-shrink-0 p-3 bg-indigo-100/70 rounded-2xl">
-                            <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                            </svg>
+                        <div class="flex-shrink-0 p-3 bg-indigo-100 rounded-2xl text-indigo-600">
+                            <x-icon name="dokumen" class="w-6 h-6" />
                         </div>
                         <div>
                             <p class="text-sm text-slate-500">Total Modul Anda</p>
