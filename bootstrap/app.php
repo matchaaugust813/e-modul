@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role'          => \App\Http\Middleware\RoleMiddleware::class,
             'status.active' => \App\Http\Middleware\CheckStatus::class,
         ]);
+
+            $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
