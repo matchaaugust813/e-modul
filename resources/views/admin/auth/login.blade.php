@@ -3,19 +3,19 @@
 
     {{-- Error --}}
     @if ($errors->any())
-        <div class="mb-5 p-4 rounded-2xl bg-rose-50 border border-rose-200/60 text-sm text-rose-700">
+        <div class="mb-5 p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200/60 dark:border-rose-800/60 text-sm text-rose-700 dark:text-rose-300">
             {{ $errors->first() }}
         </div>
     @endif
 
     <div class="mb-6">
         <div class="flex items-center gap-3 mb-1">
-            <div class="w-10 h-10 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600">
+            <div class="w-10 h-10 rounded-2xl bg-indigo-100 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                 <x-icon name="pengaturan" class="w-6 h-6" />
             </div>
-            <h2 class="text-xl font-bold text-slate-800">Panel Administrator</h2>
+            <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">Panel Administrator</h2>
         </div>
-        <p class="text-sm text-slate-500">Masuk khusus superadmin atau kepala sekolah.</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400">Masuk khusus superadmin atau kepala sekolah.</p>
     </div>
 
     @php
@@ -45,15 +45,15 @@
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox"
-                       class="rounded border-slate-300 text-indigo-600 shadow-sm focus:ring-indigo-400"
+                       class="rounded border-slate-300 dark:border-slate-700 dark:bg-slate-900 text-indigo-600 shadow-sm focus:ring-indigo-400"
                        name="remember">
-                <span class="ms-2 text-sm text-slate-600">Ingat saya</span>
+                <span class="ms-2 text-sm text-slate-600 dark:text-slate-300">Ingat saya</span>
             </label>
         </div>
 
         <div class="mt-6">
             <button type="submit"
-                    class="w-full py-3 px-4 rounded-2xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600 hover:-translate-y-0.5 transition duration-300 shadow-md shadow-indigo-200/50">
+                    class="w-full py-3 px-4 rounded-2xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-500 dark:to-violet-600 hover:from-indigo-600 hover:to-violet-600 dark:hover:from-indigo-400 dark:hover:to-violet-500 hover:-translate-y-0.5 transition duration-300 shadow-md shadow-indigo-200/50 dark:shadow-none">
                 Masuk ke Panel Admin
             </button>
         </div>

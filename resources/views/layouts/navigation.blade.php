@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="sticky top-0 z-50 bg-white/50 backdrop-blur-2xl border-b border-white/60 shadow-sm supports-[backdrop-filter]:bg-white/50">
+<nav x-data="{ open: false }" class="sticky top-0 z-50 bg-white/50 dark:bg-slate-900/60 backdrop-blur-2xl border-b border-white/60 dark:border-white/10 shadow-sm supports-[backdrop-filter]:bg-white/50 dark:supports-[backdrop-filter]:bg-slate-900/60">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center gap-2">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 group">
                         <x-application-logo class="block h-9 w-auto transition duration-300 group-hover:scale-105" />
-                        <span class="font-semibold text-slate-700 text-base tracking-tight hidden sm:inline">E-Modul</span>
+                        <span class="font-semibold text-slate-700 dark:text-slate-100 text-base tracking-tight hidden sm:inline">E-Modul</span>
                     </a>
                 </div>
 
@@ -24,7 +24,7 @@
                             <x-nav-link :href="route('admin.persetujuan.index')" :active="request()->routeIs('admin.persetujuan.*')">
                                 <span>Persetujuan</span>
                                 @if($pendingCount > 0)
-                                    <span class="ml-1.5 px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                                    <span class="ml-1.5 px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800/60">
                                         {{ $pendingCount }}
                                     </span>
                                 @endif
@@ -57,11 +57,13 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <!-- Settings Dropdown & Theme Toggle -->
+            <div class="hidden sm:flex sm:items-center sm:gap-3 sm:ms-6">
+                <x-theme-toggle />
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center gap-2 px-3 py-2 bg-white/50 border border-white/60 rounded-2xl text-sm font-medium text-slate-700 hover:bg-white/70 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition duration-300">
+                        <button class="inline-flex items-center gap-2 px-3 py-2 bg-white/50 dark:bg-slate-800/70 border border-white/60 dark:border-white/10 rounded-2xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white/70 dark:hover:bg-slate-700/70 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-400 transition duration-300">
                             <span>{{ Auth::user()->name }}</span>
                             <svg class="h-4 w-4 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -89,7 +91,7 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-2xl text-slate-400 hover:text-slate-600 hover:bg-white/50 focus:outline-none transition duration-300">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-2xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-white/50 dark:hover:bg-slate-800/50 focus:outline-none transition duration-300">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -100,7 +102,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-white/40 bg-white/60 backdrop-blur-2xl">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-white/40 dark:border-white/10 bg-white/60 dark:bg-slate-900/90 backdrop-blur-2xl">
         <div class="pt-2 pb-3 space-y-1">
             @auth
                 @if(auth()->user()->isSuperAdmin())
@@ -137,11 +139,16 @@
             @endauth
         </div>
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-white/40">
-            <div class="px-4">
-                <div class="font-semibold text-base text-slate-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-slate-500">{{ Auth::user()->email }}</div>
+        <!-- Responsive Settings Options & Theme Toggle -->
+        <div class="pt-4 pb-3 border-t border-white/40 dark:border-white/10">
+            <div class="px-4 flex items-center justify-between pb-3">
+                <span class="text-sm font-medium text-slate-600 dark:text-slate-300">Tema Tampilan</span>
+                <x-theme-toggle />
+            </div>
+
+            <div class="px-4 pt-2 border-t border-white/30 dark:border-white/10">
+                <div class="font-semibold text-base text-slate-800 dark:text-slate-100">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-slate-500 dark:text-slate-400">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">

@@ -119,11 +119,29 @@ Aplikasi modul pembelajaran: Laravel 13 + Breeze (Blade). Hierarki: kelas (1-12)
 - Navigasi khusus superadmin di `navigation.blade.php` (dengan badge hitungan pending).
 - `php artisan migrate` (berhasil) — `php artisan ui:cek-emoji` (bersih, 0 temuan) — `npm run build` (berhasil, CSS 73.39 kB, JS 54.32 kB).
 
+## Sudah selesai (Tahap 6)
+- Dukungan Dark mode penuh dengan palet soft & smooth (slate-950/indigo-950/slate-900).
+- Tailwind 3 dikonfigurasi `darkMode: 'class'`, transisi halus 200ms saat alih tema manual, `color-scheme: dark/light`.
+- Pilihan tema tersimpan di localStorage (`emodul-theme`: light, dark, system), bawaan ikut sistem, merespons `matchMedia` sistem.
+- Script anti-kilatan tema (FOUC) mandiri di `partials/theme-script.blade.php`, dimuat sebelum CSS di seluruh layout dan halaman error.
+- Komponen bersama `<x-theme-toggle>` radiogroup 3 opsi (matahari, bulan, monitor), target sentuh min 40px, keyboard accessible.
+- Penempatan `<x-theme-toggle>`: navbar desktop & mobile guru, siswa, admin; navbar welcome; pojok atas login/daftar; halaman profil.
+- Pembaruan seluruh komponen bersama dan view (guru, siswa, admin, auth, welcome, profil, error 403/404/419/500) dengan varian `dark:`.
+- Frame pembungkus penampil PDF bertema gelap, dokumen PDF di dalam iframe tetap terang (tanpa invert).
+- Feature test baru `tests/Feature/DarkModeTest.php` (4 passed, 13 assertions).
+- `php artisan ui:cek-emoji` (bersih, 0 temuan) — `npm run build` (berhasil, CSS 90.23 kB, JS 54.32 kB).
+
 ## Status dan urutan tahap berikutnya
-- Selesai: Tahap 1, 2, 3, 4A, 4A-2, Welcome, 5A, 4C, 5B.
+- Selesai: Tahap 1, 2, 3, 4A, 4A-2, Welcome, 5A, 4C, 5B, 6.
 - Berikutnya: Tahap 4B (Pesan umpan balik, empty state, dan automated feature test).
 
 ## Aturan tampilan (wajib, berlaku untuk semua tahap)
+- Semua view dan komponen baru wajib mendukung dark mode: pakai varian `dark:`,
+  dilarang warna keras (hex, inline style) tanpa pasangan gelap, dan uji di kedua
+  mode sebelum menyatakan selesai.
+- Tema disimpan di localStorage (`emodul-theme`: light, dark, system), bawaan
+  ikut sistem. Skrip anti-kilatan ada di satu partial yang dimuat semua layout.
+- Ikon tema memakai `<x-icon>` dan tombolnya `<x-theme-toggle>`.
 - DILARANG memakai emoji di mana pun: view, komponen, pesan, seeder, config, README.
   Termasuk simbol dekoratif seperti centang, silang, bintang, dan tanda peringatan
   bergambar. Ikon hanya lewat komponen `<x-icon>` (SVG inline, satu gaya: stroke 1.5,

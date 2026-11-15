@@ -69,6 +69,21 @@
 .stagger-item:nth-child(10) { animation-delay: 0.50s; }
 .stagger-item:nth-child(n+11) { animation-delay: 0.55s; }
 
+/* ===== Color scheme & Theme transitions ===== */
+html.dark {
+    color-scheme: dark;
+}
+html:not(.dark) {
+    color-scheme: light;
+}
+
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+    transition: background-color 200ms ease-out, border-color 200ms ease-out, color 200ms ease-out, fill 200ms ease-out, stroke 200ms ease-out !important;
+}
+
 /* ===== Smooth scroll ===== */
 html { scroll-behavior: smooth; }
 
@@ -87,5 +102,12 @@ html { scroll-behavior: smooth; }
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    html.theme-transition,
+    html.theme-transition *,
+    html.theme-transition *::before,
+    html.theme-transition *::after {
+        transition: none !important;
     }
 }

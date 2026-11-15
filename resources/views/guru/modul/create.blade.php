@@ -6,7 +6,7 @@
                 <x-icon name="panah-kiri" class="w-4 h-4 inline mr-1" />
                 Kembali
             </x-btn-secondary>
-            <h2 class="font-semibold text-xl text-slate-800 leading-tight">Tambah Modul Baru</h2>
+            <h2 class="font-semibold text-xl text-slate-800 dark:text-slate-100 leading-tight">Tambah Modul Baru</h2>
         </div>
     </x-slot>
 

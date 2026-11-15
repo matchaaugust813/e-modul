@@ -21,4 +21,3 @@
     <line x1="24" y1="34" x2="24" y2="40" stroke="#818cf8" stroke-width="1" stroke-linecap="round"/>
     <line x1="30" y1="37" x2="30" y2="40" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
 </svg>
-</svg>

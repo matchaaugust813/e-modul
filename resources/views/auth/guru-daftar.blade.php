@@ -1,17 +1,17 @@
 <x-guest-layout>
     {{-- Error --}}
     @if ($errors->any())
-        <div class="mb-5 p-4 rounded-2xl bg-rose-50/80 border border-rose-200/60 text-sm text-rose-700">
+        <div class="mb-5 p-4 rounded-2xl bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200/60 dark:border-rose-800/60 text-sm text-rose-700 dark:text-rose-300">
             {{ $errors->first() }}
         </div>
     @endif
 
     <div class="mb-6">
         <div class="flex items-center gap-3 mb-1">
-            <x-icon name="guru" class="w-7 h-7 text-violet-600" />
-            <h2 class="text-xl font-bold text-slate-800">Daftar sebagai Guru</h2>
+            <x-icon name="guru" class="w-7 h-7 text-violet-600 dark:text-violet-400" />
+            <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">Daftar sebagai Guru</h2>
         </div>
-        <p class="text-sm text-slate-500">
+        <p class="text-sm text-slate-500 dark:text-slate-400">
             Isi data di bawah. Akun Anda akan menunggu persetujuan kepala sekolah.
         </p>
     </div>
@@ -69,8 +69,8 @@
         </div>
 
         {{-- Info rate limit --}}
-        <p class="mt-4 text-xs text-slate-400 flex items-center gap-1">
-            <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+        <p class="mt-4 text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-amber-400 dark:text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
             </svg>
             Pendaftaran dibatasi 5 kali per jam per perangkat.
@@ -78,7 +78,7 @@
 
         <div class="mt-6">
             <button type="submit"
-                    class="w-full py-3 px-4 rounded-2xl text-sm font-semibold text-white bg-gradient-to-r from-violet-400 to-indigo-400 hover:from-violet-500 hover:to-indigo-500 hover:-translate-y-0.5 transition duration-300 shadow-md shadow-violet-200/50">
+                    class="w-full py-3 px-4 rounded-2xl text-sm font-semibold text-white bg-gradient-to-r from-violet-400 to-indigo-400 dark:from-violet-500 dark:to-indigo-600 hover:from-violet-500 hover:to-indigo-500 dark:hover:from-violet-400 dark:hover:to-indigo-500 hover:-translate-y-0.5 transition duration-300 shadow-md shadow-violet-200/50 dark:shadow-none">
                 Daftar Sekarang
             </button>
         </div>
@@ -86,11 +86,11 @@
 
     <div class="mt-6 flex flex-col items-center gap-2 text-sm">
         <a href="{{ route('guru.login') }}"
-           class="text-violet-600 hover:text-violet-800 hover:underline transition">
+           class="text-violet-600 dark:text-violet-400 hover:text-violet-800 dark:hover:text-violet-300 hover:underline transition">
             Sudah punya akun? Masuk Guru
         </a>
         <a href="{{ route('login') }}"
-           class="text-slate-500 hover:text-slate-700 hover:underline transition">
+           class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:underline transition">
             ← Kembali ke Pemilih Peran
         </a>
     </div>
