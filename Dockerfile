@@ -32,9 +32,18 @@ RUN touch database/database.sqlite \
     && DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite \
        php artisan migrate --seed --force
 
+# Build CSS/JS (Vite). Memakai vendor dari tahap sebelumnya agar Tailwind
+# bisa membaca view bawaan Laravel (pagination).
+FROM node:22-bookworm-slim AS assets
+
+WORKDIR /app
+COPY --from=dependencies /app /app
+RUN npm ci --ignore-scripts && npm run build
+
 FROM base AS runtime
 
 COPY --from=dependencies --chown=www-data:www-data /app /app
+COPY --from=assets --chown=www-data:www-data /app/public/build /app/public/build
 COPY --chown=www-data:www-data Caddyfile /etc/frankenphp/Caddyfile
 
 RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
