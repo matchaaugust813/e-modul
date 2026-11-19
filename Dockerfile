@@ -26,10 +26,9 @@ RUN mkdir -p \
         database \
     && composer dump-autoload --no-dev --classmap-authoritative
 
-# Preview saja: bangun database SQLite + data demo saat build, jadi ikut di dalam image.
-# Data baru yang ditulis saat runtime TIDAK permanen.
+# Buat database SQLite + isi data awal saat build (admin, guru, siswa, kelas, mapel)
 RUN touch database/database.sqlite \
-    && DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite \
+    && APP_ENV=local DB_CONNECTION=sqlite DB_DATABASE=/app/database/database.sqlite \
        php artisan migrate --seed --force
 
 # Build CSS/JS (Vite). Memakai vendor dari tahap sebelumnya agar Tailwind
@@ -47,7 +46,7 @@ COPY --from=assets --chown=www-data:www-data /app/public/build /app/public/build
 COPY --chown=www-data:www-data Caddyfile /etc/frankenphp/Caddyfile
 
 RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
-    && chown -R www-data:www-data /config/caddy /data/caddy
+    && chown -R www-data:www-data /config/caddy /data/caddy /app/database
 
 ENV PORT=80 \
     APP_ENV=production \
